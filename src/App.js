@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   useNavigate,
 } from "react-router-dom";
 import * as braze from "@braze/web-sdk";
@@ -41,7 +40,7 @@ const AgeGate = () => {
 
       navigate("/home"); // Navigate to Home screen
     } else {
-      // Disable Braze SDK
+      // Don't initialize Braze SDK
       alert("Sorry, this app is only for users 18 years and older.");
     }
   };

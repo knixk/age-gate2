@@ -22,27 +22,30 @@ const Home = () => {
 const AgeGate = () => {
   const [age, setAge] = useState("");
   const navigate = useNavigate(); // Hook for navigation
+  const [check, setCheck] = useState(false);
 
   const handleAgeInputChange = (event) => {
     setAge(event.target.value);
   };
 
+  const handleCheck = () => {
+    let temp = !check;
+    setCheck(temp);
+    console.log(temp)
+  };
+
   const handleAgeSubmit = () => {
     const parsedAge = parseInt(age);
-    if (parsedAge >= 18) {
+    if (parsedAge >= 18 && !check) {
       // Enable Braze SDK
       braze.initialize("bfe1d7a8-2c42-428e-a5fd-5757c0f6507d", {
         baseUrl: "sdk.fra-02.braze.eu",
         enableLogging: true,
       });
 
-      alert('We are tracking your behaviour to provide a better experience...')
-
-      navigate("/home"); // Navigate to Home screen
-    } else {
-      // Don't initialize Braze SDK
-      alert("Sorry, this app is only for users 18 years and older.");
+      alert("We are tracking your behaviour to provide a better experience...");
     }
+    navigate("/home"); // Navigate to Home screen
   };
 
   return (
@@ -56,6 +59,19 @@ const AgeGate = () => {
         placeholder="Enter your age"
         className="input"
       />
+      <div>
+        <label htmlFor="checkbox">
+          <input
+            type="checkbox"
+            name="checkbox"
+            value={check}
+            defaultChecked={false}
+            id="checkbox"
+            onChange={handleCheck}
+          />
+          Don't track my data
+        </label>
+      </div>
       <button onClick={handleAgeSubmit} className="btn">
         Submit
       </button>

@@ -6,13 +6,26 @@ import {
   useNavigate,
 } from "react-router-dom";
 import * as braze from "@braze/web-sdk";
-import "./App.css"; // Import CSS file for styling
+import "./App.css"; 
 
 // Home component
 const Home = () => {
+  const navigate = useNavigate(); // Hook for navigation
+
+  const handleClick = () => {
+    braze.disableSDK();
+    alert("No longer tracking...");
+  };
+
   return (
     <div className="container">
-      <h1>Welcome to the Home Screen!</h1>
+      <button onClick={() => navigate("/")} className="btn b">
+        Home
+      </button>
+      <button onClick={handleClick} className="btn">
+        Disable tracking
+      </button>
+      <h1>Welcome!</h1>
       <p>Feel free to explore our Children's Gaming App.</p>
     </div>
   );
@@ -31,13 +44,14 @@ const AgeGate = () => {
   const handleCheck = () => {
     let temp = !check;
     setCheck(temp);
-    console.log(temp)
+    console.log(temp);
   };
 
   const handleAgeSubmit = () => {
     const parsedAge = parseInt(age);
     if (parsedAge >= 18 && !check) {
       // Enable Braze SDK
+      braze.enableSDK();
       braze.initialize("bfe1d7a8-2c42-428e-a5fd-5757c0f6507d", {
         baseUrl: "sdk.fra-02.braze.eu",
         enableLogging: true,
@@ -51,7 +65,6 @@ const AgeGate = () => {
   return (
     <div className="container">
       <h1>Welcome to our Children's Gaming App!</h1>
-      {/* This could be a styled alert instead */}
       <input
         type="number"
         value={age}

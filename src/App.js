@@ -44,7 +44,6 @@ const AgeGate = () => {
   const handleCheck = () => {
     let temp = !check;
     setCheck(temp);
-    console.log(temp);
   };
 
   const handleAgeSubmit = () => {
